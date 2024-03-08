@@ -1,48 +1,88 @@
 import { Component } from "react";
 
-class Box1 extends  Component{
-    render(){
-        return(
-            <div>
-                 <div className="nav-barlink">
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a className="navbar-brand" href="/">
-                    <img className="nav-img" src="https://res.cloudinary.com/durl1zi88/image/upload/v1693813885/logo_1_a4wkk9.png" />
-                </a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                        <a className="nav-link active" href="/">
-                            Home
-                            <span className="sr-only">(current)</span>
-                        </a>
-                        <a className="nav-link colr" href="/">About Us</a>
-                        <select className="colr1">
-                            <option>services</option>
-                            <option>Enterprise Technology</option>
-                            <option>Application Services</option>
-                            <option>Payroll Services</option>
-                        </select>
-                        <select className="colr1">
-                            <option>Insustriry</option>
-                            <option>Banking</option>
-                            <option>Tax filling</option>
-                            <option>Payroll Services</option>
-                        </select>
-                        <a className="nav-link colr" href="/">Blog </a>
-                        <a className="nav-link colr" href="/">Contact Us</a>
-                        <svg className="icn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-boxes" viewBox="0 0 16 16">
-                            <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z" />
-                        </svg>
-                    </div>
-                </div>
-            </nav>
+import Box2 from "../Box2";
 
-        </div>
+import './index.css'
+
+const hydPlaces=[
+    {
+        imgUrl:"https://yometro.com/images/places/hyderabad.jpg",
+        name:"charminar",
+        unqId:1
+    },
+    {
+        imgUrl:"https://upload.wikimedia.org/wikipedia/commons/b/bd/Taj_Mahal%2C_Agra%2C_India_edit3.jpg",
+        name:"taj Mahal",
+        unqId:2
+    },
+    {
+        imgUrl:"https://upload.wikimedia.org/wikipedia/commons/9/94/The_Golden_Temple_of_Amrithsar_7.jpg",
+        name:"golden Temple",
+        unqId:3
+    },
+    {
+        imgUrl:"https://img.traveltriangle.com/blog/wp-content/uploads/2019/11/cover-image-of-Things-To-Do-In-Goa_22nd-nov.jpg",
+        name:"goa",
+        unqId:4
+    },
+    {
+        imgUrl:"https://www.savaari.com/blog/wp-content/uploads/2024/01/Wonderla-Bangalore-1-1.webp",
+        name:"wonderla",
+        unqId:5
+    },
+    {
+        imgUrl:"https://media.istockphoto.com/id/172124032/photo/mysore-palace-at-dusk.jpg?s=612x612&w=0&k=20&c=paO74C_dVsY14IbK0RNqs0TD-lSteQy-AW5CnQFEb_4=",
+        name:"mysore palace",
+        unqId:6
+    },
+]
+
+class Box1 extends Component{
+    state={
+        inputs:"",
+        places:hydPlaces,
+    }
+
+entered=(event)=>{
+
+    this.setState({inputs:event.target.value})
+}
+
+
+onDelete1=(unqId)=>{
+    const {places}=this.state
+    const new1=places.filter((place) => place.unqId !== unqId);
+    this.setState({places:new1});
+}
+
+
+    render(){
+
+        const {places,inputs}=this.state
+        const searchResults = places.filter(eachUser =>
+            eachUser.name.includes(inputs)
+          )
+
+
+        return(
+            <div className="box1">
+                <div className="box2">
+                    <h1>Places  to visit</h1>
+                    <input className="imp" onChange={this.entered} type="search"/>
+                    <button onClick={this.filterbtn} className="imp">Enter</button>
+                </div>
+                <ul className="placeList" >
+          {searchResults.map(eachUser => (
+            <Box2
+            onDelete1={this.onDelete1}
+              userDetails={eachUser}
+              key={eachUser.unqId}
+            />
+          ))}
+        </ul>
             </div>
+
         )
     }
 }
-export default Box1
+export default  Box1;
